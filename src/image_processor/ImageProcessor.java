@@ -1,11 +1,21 @@
 package image_processor;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
+
 public class ImageProcessor {
-	public ImageProcessor(){
+	Mat image;
+	
+	public ImageProcessor(String imageFile){
 		
 	}
 	
-	public static void downScale(){
+	public static Mat downScale(Mat originalImage, Size size){
+		Mat finalImage = new Mat();
 		
+		Imgproc.resize(originalImage, finalImage, size);
+		
+		return finalImage;
 	}
 }
