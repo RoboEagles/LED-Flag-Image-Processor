@@ -1,9 +1,15 @@
 package image_processor;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.Formatter;
 
 import javax.imageio.ImageIO;
 
@@ -22,48 +28,62 @@ public final class ImageProcessor {
 		JPEG,
 	}
 	
+	// Constructor
+	// Does nothing for now
 	public ImageProcessor(){
 		
 	}
 
-	
-	public static void saveImage(String imgLocation, String saveLocation, FileType type) {
-		
-	}
-		
-	public static void convertImage(String imgLocation, String saveLocation, FileType type) throws IOException {
-		File file = new File(imgLocation);
+//	// Resizes the image Mat (Based on OpenCV)
+//	public static Mat downScale(Mat originalImage, int width, int height){
+//		Mat finalImage = new Mat();
+//		Size size = new Size(width, height);
+//		
+//		Imgproc.resize(originalImage, finalImage, size);
+//		
+//		return finalImage;
+//	}
 
-		BufferedImage image = ImageIO.read(file);
-		// Here we convert into *supported* format
-		BufferedImage imageCopy;
-		switch(type) {
-			case PNG:
-				imageCopy = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-				break;
-			default:
-				imageCopy = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
-				break;
-		}imageCopy.getGraphics().drawImage(image, 0, 0, null);
+	// Resizes a buffered image
+	public static BufferedImage resize(BufferedImage img, int height, int width) {
+		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
+		Graphics2D g2D = resized.createGraphics();
+		g2D.drawImage(tmp, 0,0,null);
+		g2D.dispose();
+		return resized;
+	}
+	
+	// Creates a byte array based on the image
+	public static byte[] convertImage(BufferedImage img, String saveLocation){		
+		try {
+			// 
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			
+			ImageIO.write(img, "jpg", output);
+			
+			byte[] data = output.toByteArray();
+			
+			return data;
+		}catch(Exception e) {
+			System.out.println("Unable to convert the image into a byte array");
+			e.printStackTrace();
+			return null;
+		}
 
-		byte[] data = ((DataBufferByte) imageCopy.getRaster().getDataBuffer()).getData();  
-		Mat img = new Mat(image.getHeight(),image.getWidth(), CvType.CV_8UC3);
-		img.put(0, 0, data);           
-		Imgcodecs.imwrite(saveLocation, img);
 	}
 	
-	public static Mat fileToMat() {
-		Mat image;
-		
-		return image;
+	// Saves the image's byte array to the specified save location
+	public static void saveArray(byte[] data, String saveLocation) {
+		try {
+			
+			Formatter f = new Formatter(saveLocation);
+			f.format("%s", data.toString());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public static Mat downScale(Mat originalImage, int width, int height){
-		Mat finalImage = new Mat();
-		Size size = new Size(width, height);
-		
-		Imgproc.resize(originalImage, finalImage, size);
-		
-		return finalImage;
-	}
+
 }
