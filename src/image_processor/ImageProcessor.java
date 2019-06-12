@@ -34,16 +34,6 @@ public final class ImageProcessor {
 		
 	}
 
-//	// Resizes the image Mat (Based on OpenCV)
-//	public static Mat downScale(Mat originalImage, int width, int height){
-//		Mat finalImage = new Mat();
-//		Size size = new Size(width, height);
-//		
-//		Imgproc.resize(originalImage, finalImage, size);
-//		
-//		return finalImage;
-//	}
-
 	// Resizes a buffered image
 	public static BufferedImage resize(BufferedImage img, int height, int width) {
 		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
