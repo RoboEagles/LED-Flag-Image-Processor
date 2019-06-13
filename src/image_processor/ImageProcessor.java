@@ -46,8 +46,8 @@ public final class ImageProcessor {
 					
 					// Turns all the white into black so they can't be presented by the LEDs
 					if(!showWhite) {
-						if(value != 0xffffffff) {
-							array[index] = value;
+						if(value <0xffffff) {
+							array[index] = 0xffffff;
 						}
 						else {
 							array[index] = 0x00000000;
@@ -73,9 +73,9 @@ public final class ImageProcessor {
 			
 			f.format("%s", "{");
 			for(int i = 0; i < data.length - 1; i++) {
-				f.format("%h, ", data[i]);
+				f.format("0x%h, ", data[i]);
 			}
-			f.format("%h }", data[data.length-1]);
+			f.format("0x%h }", data[data.length-1]);
 			
 			f.close();
 		} catch (FileNotFoundException e) {

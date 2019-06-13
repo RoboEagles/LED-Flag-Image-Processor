@@ -12,8 +12,8 @@ import window.Window;
 public class Main {
 	
 	public static void main(String[] args) {		
-		String fileLocation = "C:\\Users\\suhey\\OneDrive\\Desktop\\Eagle Design.png";
-		String saveLocation = "C:\\Users\\suhey\\OneDrive\\Desktop\\ProcessedImage.txt";
+		String fileLocation = "C:\\Users\\suhey\\OneDrive\\Desktop\\x-mark.png";
+		String saveLocation = "C:\\Users\\suhey\\OneDrive\\Desktop\\NewImage.txt";
 		
 		final int LEDS = 60;
 		final int SLICES = 120;
@@ -21,50 +21,32 @@ public class Main {
 		final int RES_WIDTH = 1280;
 		final int RES_HEIGHT = 720;
 		
-		Window window = new Window(RES_WIDTH,RES_HEIGHT);
-		
 		int[] data = new int[LEDS*SLICES];
-		
-		while(window.running) {
 			
-			if(window.isChooseFilePressed()) {
-				fileLocation = window.getFileLocation();
+			System.out.println("Convert Button has been pressed");
+			try {
+				// Gets the original image that will be processed
+				BufferedImage img = ImageIO.read(new File(fileLocation));
+				System.out.println("Loaded the image...");
 				
-//				// Updates the location of the image file
-//				fileLocation = window.fileLocationText.getText();
-//			
+				// Resizes the image to the according to how many columns and rows you want
+				BufferedImage resizedImg = ImageProcessor.resize(img, LEDS, SLICES);
+				System.out.println("Resized the image...");
+				
+				// Converts the resized image to a byte array
+				data = ImageProcessor.convertImage(resizedImg, false);
+				System.out.println("Converted the image...");
+				
+//				//Checks each value in the array to make sure the values aren't nonsense
+//				ImageProcessor.checkArray(data);
+				
+				System.out.println("Image has been converted to an array");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			
-//			if(window.isChooseSavePressed()) {
-//				// Updates the save location of the final image array
-//				saveLocation = window.saveLocationText.getText();
-//			}
-			
-			if(window.isConvertButtonPressed()) {
-				try {
-					// Gets the original image that will be processed
-					BufferedImage img = ImageIO.read(new File(fileLocation));
-					
-					// Resizes the image to the according to how many columns and rows you want
-					BufferedImage resizedImg = ImageProcessor.resize(img, LEDS, SLICES);
-					
-					// Converts the resized image to a byte array
-					data = ImageProcessor.convertImage(resizedImg, window.showWhiteCheck.isSelected());
-					
-//					//Checks each value in the array to make sure the values aren't nonsense
-//					ImageProcessor.checkArray(data);
-					
-					System.out.println("Image has been converted to an array");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if(window.isSaveButtonPressed()) {
-				// Saves the byte array to a text file at the designated location
-				ImageProcessor.saveArray(data, saveLocation);
-			}
-		}
+			// Saves the byte array to a text file at the designated location
+			ImageProcessor.saveArray(data, saveLocation);
 		
 	}
 	

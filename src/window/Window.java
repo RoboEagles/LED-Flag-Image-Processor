@@ -46,20 +46,20 @@ public class Window{
 	public int imageWidth,
 				imageHeight;
 		
-	public String getFileLocation() {
-		JFileChooser chooser = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter("JPG & PNG Files", "JPG", "PNG");
-    	chooser.setFileFilter(filter);
-    	
-        int returnVal = chooser.showOpenDialog(chooser);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           return chooser.getSelectedFile().getAbsolutePath();
-        }
-        else {
-        	System.out.println("User did not pick a file");
-        	return "";
-        }
-    }
+//	public String getFileLocation() {
+//		JFileChooser chooser = new JFileChooser();
+//		FileFilter filter = new FileNameExtensionFilter("JPG & PNG Files", "JPG", "PNG");
+//    	chooser.setFileFilter(filter);
+//    	
+//        int returnVal = chooser.showOpenDialog(chooser);
+//        if(returnVal == JFileChooser.APPROVE_OPTION) {
+//           return chooser.getSelectedFile().getAbsolutePath();
+//        }
+//        else {
+//        	System.out.println("User did not pick a file");
+//        	return "";
+//        }
+//    }
 	
 	// ****************************** Window Button Actions *************************** //
 	public void convertButton_Action() {
