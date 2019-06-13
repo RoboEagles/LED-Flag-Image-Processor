@@ -22,12 +22,6 @@ import org.opencv.imgproc.Imgproc;
 public final class ImageProcessor {
 	Mat image;
 	
-	public enum FileType{
-		PNG,
-		JPG,
-		JPEG,
-	}
-	
 	// Constructor
 	// Does nothing for now
 	public ImageProcessor(){
@@ -44,31 +38,58 @@ public final class ImageProcessor {
 		return resized;
 	}
 	
-	// Creates a byte array based on the image
-	public static byte[] convertImage(BufferedImage img, String saveLocation){		
+	// Converts a buffered image into a byte array
+//	public static byte[] convertImage(BufferedImage img){		
+//		try {
+//			ByteArrayOutputStream output = new ByteArrayOutputStream();
+//			
+//			ImageIO.write(img, "jpg", output);
+//			
+//			byte[] data = output.toByteArray();
+//			
+//			return data;
+//		}catch(Exception e) {
+//			System.out.println("Unable to convert the image into a byte array");
+//			e.printStackTrace();
+//			return null;
+//		}
+//
+//	}
+	
+	// Manually parses through an image to store its RGB values
+	public static int[] convertImage(BufferedImage img) {
+		int[] array = new int[7200];
+		
 		try {
-			// 
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			
-			ImageIO.write(img, "jpg", output);
-			
-			byte[] data = output.toByteArray();
-			
-			return data;
+			for(int i = 0; i < img.getWidth(); i++) {
+				for(int x = 0; x < img.getHeight(); x++) {
+					int index = i*img.getHeight() + x;
+					
+					// Places the RGB value of the pixel into the array
+					// Subtracts by 4278190080L to get rid of the white in the RGB value
+					array[index] = (int) (img.getRGB(i,x) - 4278190080L);
+				}
+			}
 		}catch(Exception e) {
-			System.out.println("Unable to convert the image into a byte array");
 			e.printStackTrace();
-			return null;
 		}
-
+		
+		return array;
 	}
 	
 	// Saves the image's byte array to the specified save location
-	public static void saveArray(byte[] data, String saveLocation) {
+	public static void saveArray(int[] data, String saveLocation) {
 		try {
 			
 			Formatter f = new Formatter(saveLocation);
-			f.format("%s", data.toString());
+			
+			f.format("%s", "{");
+			for(int i = 0; i < data.length - 1; i++) {
+				f.format("%h, ", data[i]);
+			}
+			f.format("%h }", data[data.length-1]);
+			
+			f.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
