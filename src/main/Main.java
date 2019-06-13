@@ -26,19 +26,10 @@ public class Main {
 			BufferedImage resizedImg = ImageProcessor.resize(img, LEDS, SLICES);
 			
 			// Converts the resized image to a byte array
-//			byte[] data = ImageProcessor.convertImage(resizedImg);
 			int[] data = ImageProcessor.convertImage(resizedImg);
 			
-			// Checks each value in the array to make sure the values aren't nonsense
-			for(int i = 0; i < data.length; i++) {
-				
-				System.out.printf("%h", data[i]);
-				System.out.println(", " + i);
-			}
-			
-			System.out.println(resizedImg.getHeight());
-
-			System.out.println(resizedImg.getWidth());
+//			//Checks each value in the array to make sure the values aren't nonsense
+//			ImageProcessor.checkArray(data);
 			
 			// Saves the byte array to a text file at the designated location
 			ImageProcessor.saveArray(data, saveLocation);

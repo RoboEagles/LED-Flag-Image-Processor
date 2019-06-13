@@ -13,17 +13,9 @@ import java.util.Formatter;
 
 import javax.imageio.ImageIO;
 
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
-
 public final class ImageProcessor {
-	Mat image;
 	
 	// Constructor
-	// Does nothing for now
 	public ImageProcessor(){
 		
 	}
@@ -95,6 +87,13 @@ public final class ImageProcessor {
 			e.printStackTrace();
 		}
 	}
-	
 
+	// Checks each value in the array to make sure the values aren't nonsense
+	public static void checkArray(int[] data) {
+		for(int i = 0; i < data.length; i++) {
+			
+			System.out.printf("%h", data[i]);
+			System.out.println(", " + i);
+		}
+	}
 }
