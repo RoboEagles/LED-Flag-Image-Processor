@@ -26,12 +26,20 @@ public class Main {
 		int[] data = new int[LEDS*SLICES];
 		
 		while(window.running) {
-			// Updates the location of the image file
-			fileLocation = window.fileLocationText.getText();
 			
-			// Updates the save location of the final image array
-			fileLocation = window.fileLocationText.getText();
-
+			if(window.isChooseFilePressed()) {
+				fileLocation = window.getFileLocation();
+				
+//				// Updates the location of the image file
+//				fileLocation = window.fileLocationText.getText();
+//			
+			}
+			
+//			if(window.isChooseSavePressed()) {
+//				// Updates the save location of the final image array
+//				saveLocation = window.saveLocationText.getText();
+//			}
+			
 			if(window.isConvertButtonPressed()) {
 				try {
 					// Gets the original image that will be processed
