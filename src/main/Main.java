@@ -22,8 +22,8 @@ public class Main {
 		final int RES_HEIGHT = 720;
 		
 		Window window = new Window(RES_WIDTH,RES_HEIGHT);
-		Thread t = new Thread(window);
-		t.start();
+		
+		int[] data = new int[LEDS*SLICES];
 		
 		while(window.running) {
 			// Updates the location of the image file
@@ -41,19 +41,20 @@ public class Main {
 					BufferedImage resizedImg = ImageProcessor.resize(img, LEDS, SLICES);
 					
 					// Converts the resized image to a byte array
-					int[] data = ImageProcessor.convertImage(resizedImg);
+					data = ImageProcessor.convertImage(resizedImg, window.showWhiteCheck.isSelected());
 					
 //					//Checks each value in the array to make sure the values aren't nonsense
 //					ImageProcessor.checkArray(data);
-					
-					// Saves the byte array to a text file at the designated location
-					ImageProcessor.saveArray(data, saveLocation);
 					
 					System.out.println("Image has been converted to an array");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}
+			if(window.isSaveButtonPressed()) {
+				// Saves the byte array to a text file at the designated location
+				ImageProcessor.saveArray(data, saveLocation);
 			}
 		}
 		

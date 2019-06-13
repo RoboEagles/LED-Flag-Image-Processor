@@ -14,26 +14,32 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-public class Window implements Runnable{	
+/* Contains all the code for the UI of this program
+ * 
+*/
+public class Window{	
 	
 	
 	public boolean running = true;
 	
 	JFrame window = new JFrame("LED Flag Image Processor");
 	
-	JPanel mainPanel = new JPanel();
-	JPanel images = new JPanel();
+	public JPanel mainPanel = new JPanel(),
+					images = new JPanel();
 	
-	public JTextField fileLocationText = new JTextField(10);
-	public JTextField saveLocationText = new JTextField(10);
+	public JTextField fileLocationText = new JTextField(10),
+						saveLocationText = new JTextField(10);
 	
-	JButton convertButton = new JButton("Convert Image");
+	public JButton convertButton = new JButton("Convert Image"),
+					saveButton = new JButton("Save Image");
 	
-	JLabel initialImage = new JLabel();
-	JLabel finalImage = new JLabel();
+	public JCheckBox showWhiteCheck = new JCheckBox("Show White: ");
 	
-	public int imageWidth;
-	public int imageHeight;
+	public JLabel initialImage = new JLabel(),
+					finalImage = new JLabel();
+	
+	public int imageWidth,
+				imageHeight;
 	
 	
 	// ****************************** Window Button Actions *************************** //
@@ -47,6 +53,16 @@ public class Window implements Runnable{
 		});
 	}
 	
+	public void saveButton_Action() {
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				saveButton_Pressed = true;
+			}
+			
+		});
+	}
+	
 	// ***************************** End of Button Actions ****************************** //
 	
 	// *************************** Constructor ******************************** //
@@ -54,6 +70,7 @@ public class Window implements Runnable{
 
 		// Initializes the buttons and sets what they do when clicked
 		convertButton_Action();
+		saveButton_Action();
 		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
@@ -70,6 +87,7 @@ public class Window implements Runnable{
 		
 		mainPanel.add(images);
 		mainPanel.add(convertButton);
+		mainPanel.add(saveButton);
 		mainPanel.add(fileLocationText);
 		mainPanel.add(saveLocationText);
 		
@@ -96,12 +114,16 @@ public class Window implements Runnable{
 		}
 	}
 	boolean convertButton_Pressed = false;
-
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
+	
+	public boolean isSaveButtonPressed(){
+		if(saveButton_Pressed){
+			saveButton_Pressed = false;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
+	boolean saveButton_Pressed = false;
 	
 }

@@ -30,36 +30,32 @@ public final class ImageProcessor {
 		return resized;
 	}
 	
-	// Converts a buffered image into a byte array
-//	public static byte[] convertImage(BufferedImage img){		
-//		try {
-//			ByteArrayOutputStream output = new ByteArrayOutputStream();
-//			
-//			ImageIO.write(img, "jpg", output);
-//			
-//			byte[] data = output.toByteArray();
-//			
-//			return data;
-//		}catch(Exception e) {
-//			System.out.println("Unable to convert the image into a byte array");
-//			e.printStackTrace();
-//			return null;
-//		}
-//
-//	}
-	
 	// Manually parses through an image to store its RGB values
-	public static int[] convertImage(BufferedImage img) {
+	public static int[] convertImage(BufferedImage img, boolean showWhite) {
 		int[] array = new int[7200];
 		
 		try {
+			// Goes through each pixel column by column
 			for(int i = 0; i < img.getWidth(); i++) {
 				for(int x = 0; x < img.getHeight(); x++) {
 					int index = i*img.getHeight() + x;
 					
-					// Places the RGB value of the pixel into the array
-					// Subtracts by 4278190080L to get rid of the white in the RGB value
-					array[index] = (int) (img.getRGB(i,x) - 4278190080L);
+					// Gets the RGB value of the pixel
+					// Subtracts by 0xff000000 to get rid of the white in the RGB value
+					int value = (int) (img.getRGB(i,x) - 0xff000000);
+					
+					// Turns all the white into black so they can't be presented by the LEDs
+					if(!showWhite) {
+						if(value != 0xffffffff) {
+							array[index] = value;
+						}
+						else {
+							array[index] = 0x00000000;
+						}
+					}
+					else {
+						array[index] = value;
+					}
 				}
 			}
 		}catch(Exception e) {
