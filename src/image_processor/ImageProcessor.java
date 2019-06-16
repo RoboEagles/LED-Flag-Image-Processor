@@ -3,15 +3,8 @@ package image_processor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Base64;
 import java.util.Formatter;
-
-import javax.imageio.ImageIO;
 
 public final class ImageProcessor {
 	

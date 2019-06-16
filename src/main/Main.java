@@ -98,10 +98,15 @@ public class Main {
 					String saveFolder = window.getFolderLocation();
 					saveLocation = saveFolder + File.separator + saveFileName + ".txt";
 					
-					// Saves the byte array to a text file at the designated location
-					ImageProcessor.saveArray(data, saveLocation);
-					
-					System.out.println("Image has been saved!!!");
+					if(saveFolder == "") {
+						showMessage("NO SAVE LOCATION","You must select a save location for the image array");
+					}
+					else {
+						// Saves the byte array to a text file at the designated location
+						ImageProcessor.saveArray(data, saveLocation);
+						
+						System.out.println("Image has been saved!!!");
+					}
 				}
 			}
 		}

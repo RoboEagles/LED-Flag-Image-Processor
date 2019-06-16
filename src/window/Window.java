@@ -1,7 +1,6 @@
 package window;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -14,10 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSlider;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
@@ -51,36 +47,7 @@ public class Window{
 	
 	public JLabel initialImage = new JLabel(new ImageIcon()),
 					resizedImage = new JLabel(new ImageIcon());
-		
-	public String getFileLocation() {
-		JFileChooser chooser = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter("JPG & PNG Files", "JPG", "PNG");
-    	chooser.setFileFilter(filter);
-    	
-        int returnVal = chooser.showOpenDialog(chooser);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           return chooser.getSelectedFile().getAbsolutePath();
-        }
-        else {
-        	System.out.println("User did not pick a file");
-        	return "";
-        }
-    }
-	
-	public String getFolderLocation() {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    	
-        int returnVal = chooser.showOpenDialog(chooser);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-           return chooser.getSelectedFile().getAbsolutePath();
-        }
-        else {
-        	System.out.println("User did not pick a folder");
-        	return "";
-        }
-    }
-	
+			
 	// ****************************** Window Button Actions *************************** //
 	public void chooseFileButton_Action() {
 		chooseFileButton.addActionListener(new ActionListener() {
@@ -206,5 +173,41 @@ public class Window{
 		}
 	}
 	boolean saveButton_Pressed = false;
+	
+	/**
+	 * Creates a file chooser that allows the user to select a file
+	 * @return location of the file the user selected
+	 */
+	public String getFileLocation() {
+		JFileChooser chooser = new JFileChooser();
+		FileFilter filter = new FileNameExtensionFilter("JPG & PNG Files", "JPG", "PNG");
+    	chooser.setFileFilter(filter);
+    	
+        int returnVal = chooser.showOpenDialog(chooser);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           return chooser.getSelectedFile().getAbsolutePath();
+        }
+        else {
+        	return "";
+        }
+    }
+	
+	/**
+	 * Creates a file chooser that allows the user to select a directory
+	 * @return location of the directory the user selected
+	 */
+	public String getFolderLocation() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+    	
+        int returnVal = chooser.showOpenDialog(chooser);
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+           return chooser.getSelectedFile().getAbsolutePath();
+        }
+        else {
+        	return "";
+        }
+    }
+
 	
 }
