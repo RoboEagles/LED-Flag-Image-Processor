@@ -71,7 +71,7 @@ public class Window{
     	
         int returnVal = chooser.showOpenDialog(chooser);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-           return chooser.getCurrentDirectory().getAbsolutePath();
+           return chooser.getSelectedFile().getAbsolutePath();
         }
         else {
         	System.out.println("User did not pick a folder");
