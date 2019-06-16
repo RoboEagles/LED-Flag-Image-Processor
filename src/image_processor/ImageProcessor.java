@@ -20,7 +20,13 @@ public final class ImageProcessor {
 		
 	}
 
-	// Resizes a buffered image
+	/**
+	 * Resizes a buffered image
+	 * @param img The original bufferedImage that is to be resized
+	 * @param height The height the image will be resized to
+	 * @param width The width the image will be resized to
+	 * @return 
+	 */
 	public static BufferedImage resize(BufferedImage img, int height, int width) {
 		Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
@@ -30,7 +36,14 @@ public final class ImageProcessor {
 		return resized;
 	}
 	
-	// Manually parses through an image to store its RGB values
+	/**
+	 *  Manually parses through an image to store its RGB values. Goes through the image column
+	 *  by column
+	 * @param img The original buffered image
+	 * @param showWhite If true, the array will include all white values. 
+	 * Otherwise the image will turn any white into black so the LEDs won't present them.
+	 * @return An array of RGB values from the image
+	 */
 	public static int[] convertImage(BufferedImage img, boolean showWhite) {
 		int[] array = new int[7200];
 		
@@ -65,18 +78,24 @@ public final class ImageProcessor {
 		return array;
 	}
 	
-	// Saves the image's byte array to the specified save location
+	/**
+	 *  Saves the image's array to the specified save location
+	 * @param data The array that is to be saved
+	 * @param saveLocation The disc location where the data will be saved
+	 */
 	public static void saveArray(int[] data, String saveLocation) {
 		try {
-			
+			// Opens the file that the data will be saved to
 			Formatter f = new Formatter(saveLocation);
 			
+			// Saves each value in the array to the file
 			f.format("%s", "{");
 			for(int i = 0; i < data.length - 1; i++) {
 				f.format("0x%h, ", data[i]);
 			}
 			f.format("0x%h }", data[data.length-1]);
 			
+			// Closes the file
 			f.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -84,8 +103,12 @@ public final class ImageProcessor {
 		}
 	}
 
-	// Checks each value in the array to make sure the values aren't nonsense
+	/**
+	 * Checks each value in the array to make sure the values aren't nonsense
+	 * @param data The array that will be checked
+	 */
 	public static void checkArray(int[] data) {
+		// Prints each value in the array
 		for(int i = 0; i < data.length; i++) {
 			
 			System.out.printf("%h", data[i]);
