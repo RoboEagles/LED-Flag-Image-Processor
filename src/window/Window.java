@@ -13,6 +13,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -36,7 +37,8 @@ public class Window{
 					buttons = new JPanel(),
 					images = new JPanel();
 	
-	public JTextArea array = new JTextArea(1, 100);
+	public JTextArea array = new JTextArea(5, 100);
+	JScrollPane scrollPane = new JScrollPane(array); 
 	
 //	public JTextField fileLocationText = new JTextField(10),
 //						saveLocationText = new JTextField(10);
@@ -45,7 +47,7 @@ public class Window{
 					convertButton = new JButton("Convert Image"),
 					saveButton = new JButton("Save Image");
 	
-	public JCheckBox showWhiteCheck = new JCheckBox("Show White: ");
+	public JCheckBox showWhite = new JCheckBox("Show White");
 	
 	public JLabel initialImage = new JLabel(new ImageIcon()),
 					resizedImage = new JLabel(new ImageIcon());
@@ -126,11 +128,13 @@ public class Window{
 		buttons.add(chooseFileButton);
 		buttons.add(convertButton);
 		buttons.add(saveButton);
+		buttons.add(showWhite);
 		
-//		array.setLineWrap(true);
+		array.setLineWrap(true);
+		array.setEditable(false);
 		
 		container.add(images, BorderLayout.NORTH);
-		container.add(array, BorderLayout.CENTER);
+		container.add(scrollPane, BorderLayout.CENTER);
 		container.add(buttons, BorderLayout.SOUTH);
 //		container.add(fileLocationText);
 //		container.add(saveLocationText);
