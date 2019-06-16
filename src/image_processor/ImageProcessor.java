@@ -40,11 +40,11 @@ public final class ImageProcessor {
 	 *  Manually parses through an image to store its RGB values. Goes through the image column
 	 *  by column
 	 * @param img The original buffered image
-	 * @param showWhite If true, the array will include all white values. 
-	 * Otherwise the image will turn any white into black so the LEDs won't present them.
+	 * @param showSilhouette If true, the array will include all white values. 
+	 * Otherwise the image will turn any white into black and have the rest of the image be a white silhouette.
 	 * @return An array of RGB values from the image
 	 */
-	public static int[] convertImage(BufferedImage img, boolean showWhite) {
+	public static int[] convertImage(BufferedImage img, boolean showSilhouette) {
 		int[] array = new int[7200];
 		
 		try {
@@ -58,8 +58,8 @@ public final class ImageProcessor {
 					int value = (int) (img.getRGB(i,x) - 0xff000000);
 					
 					// Turns all the white into black so they can't be presented by the LEDs
-					if(!showWhite) {
-						if(value <0xffffff) {
+					if(showSilhouette) {
+						if(value < 0xffffff) {
 							array[index] = 0xffffff;
 						}
 						else {

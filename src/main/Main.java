@@ -75,7 +75,7 @@ public class Main {
 						System.out.println("Resized the image...");
 						
 						// Converts the resized image to an int array
-						data = ImageProcessor.convertImage(resizedImg, false);
+						data = ImageProcessor.convertImage(resizedImg, true);
 						System.out.println("Converted the image...");
 						
 //						//Checks each value in the array to make sure the values aren't nonsense
