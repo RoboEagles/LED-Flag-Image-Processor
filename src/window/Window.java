@@ -41,7 +41,7 @@ public class Window{
 					saveButton = new JButton("Save Image"),
 					testButton = new JButton("Test Array");
 	
-	public JCheckBox showWhite = new JCheckBox("Show White");
+	public JCheckBox showSilhouette = new JCheckBox("Show Silhouette");
 	
 	public JLabel initialImage = new JLabel(new ImageIcon()),
 					resizedImage = new JLabel(new ImageIcon()),
@@ -106,11 +106,10 @@ public class Window{
 		buttons.add(chooseFileButton);
 		buttons.add(convertButton);
 		buttons.add(saveButton);
-		buttons.add(showWhite);
+		buttons.add(showSilhouette);
 		buttons.add(testButton);
 		
 		array.setLineWrap(true);
-		array.setEditable(false);
 		
 		container.add(images, BorderLayout.NORTH);
 		container.add(scrollPane, BorderLayout.CENTER);
