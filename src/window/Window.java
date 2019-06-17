@@ -36,17 +36,16 @@ public class Window{
 	public JTextArea array = new JTextArea(5, 100);
 	JScrollPane scrollPane = new JScrollPane(array); 
 	
-//	public JTextField fileLocationText = new JTextField(10),
-//						saveLocationText = new JTextField(10);
-	
 	public JButton chooseFileButton = new JButton("Select Image File"),
 					convertButton = new JButton("Convert Image"),
-					saveButton = new JButton("Save Image");
+					saveButton = new JButton("Save Image"),
+					testButton = new JButton("Test Array");
 	
 	public JCheckBox showWhite = new JCheckBox("Show White");
 	
 	public JLabel initialImage = new JLabel(new ImageIcon()),
-					resizedImage = new JLabel(new ImageIcon());
+					resizedImage = new JLabel(new ImageIcon()),
+					imageStrip = new JLabel(new ImageIcon());
 			
 	// ****************************** Window Button Actions *************************** //
 	public void chooseFileButton_Action() {
@@ -79,6 +78,16 @@ public class Window{
 		});
 	}
 	
+	public void testButton_Action() {
+		testButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				testButton_Pressed = true;
+			}
+			
+		});
+	}
+	
 	// ***************************** End of Button Actions ****************************** //
 	
 	// *************************** Constructor ******************************** //
@@ -88,14 +97,17 @@ public class Window{
 		convertButton_Action();
 		saveButton_Action();
 		chooseFileButton_Action();	
-
+		testButton_Action();
+		
 		images.add(initialImage, BorderLayout.WEST);
-		images.add(resizedImage, BorderLayout.EAST);
+		images.add(resizedImage, BorderLayout.CENTER);
+		images.add(imageStrip, BorderLayout.EAST);
 		
 		buttons.add(chooseFileButton);
 		buttons.add(convertButton);
 		buttons.add(saveButton);
 		buttons.add(showWhite);
+		buttons.add(testButton);
 		
 		array.setLineWrap(true);
 		array.setEditable(false);
@@ -103,19 +115,18 @@ public class Window{
 		container.add(images, BorderLayout.NORTH);
 		container.add(scrollPane, BorderLayout.CENTER);
 		container.add(buttons, BorderLayout.SOUTH);
-//		container.add(fileLocationText);
-//		container.add(saveLocationText);
 		
 		window.add(container);
 		
+		// Sets the Look and Feel of the program based on the OS
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		// Starts up the window
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 		window.setSize(RES_WIDTH, RES_HEIGHT);
@@ -173,6 +184,21 @@ public class Window{
 		}
 	}
 	boolean saveButton_Pressed = false;
+	
+	/**
+	 * 
+	 * @return whether the saveButton was pressed since this method was last called
+	 */
+	public boolean isTestButtonPressed(){
+		if(testButton_Pressed){
+			testButton_Pressed = false;
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	boolean testButton_Pressed = false;
 	
 	/**
 	 * Creates a file chooser that allows the user to select a file

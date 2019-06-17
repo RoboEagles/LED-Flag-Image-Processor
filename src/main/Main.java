@@ -3,6 +3,7 @@ package main;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -108,6 +109,27 @@ public class Main {
 						System.out.println("Image has been saved!!!");
 					}
 				}
+			}
+			
+			// Test routine that lets the user see how the image would be presented on the LED flag
+			// Runs once the user presses the "Test Array" button
+			if(window.isTestButtonPressed()) {
+				System.out.println("Testing the image array...");
+				BufferedImage stripImage = new BufferedImage(1,LEDS,BufferedImage.TYPE_INT_RGB);
+				for(int i = 0; i < SLICES; i++) {
+					try {
+						for(int x = 0; x < LEDS; x++) {
+							stripImage.setRGB(0, x, data[i*LEDS + x]);
+						}
+						window.imageStrip.setIcon(new ImageIcon(ImageProcessor.resize(stripImage, 
+													stripImage.getHeight()*4, stripImage.getWidth()*5)));
+//						System.out.printf("Running through column #%d \n", i);
+						TimeUnit.MILLISECONDS.sleep(8);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println("***DONE TESTING***");
 			}
 		}
 	}
